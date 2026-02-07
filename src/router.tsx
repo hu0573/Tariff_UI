@@ -33,4 +33,6 @@ export const router = createBrowserRouter([
       },
     ],
   },
-]);
+], {
+  basename: '/Tariff_UI', // GitHub Pages base path
+});
