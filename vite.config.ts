@@ -5,6 +5,7 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/Tariff_UI/', // GitHub Pages repository name
   plugins: [
     react(),
     tailwindcss(),
