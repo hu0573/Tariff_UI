@@ -1,0 +1,179 @@
+/* TimeSlotSelector 组件样式 */
+
+.time-slot-container {
+  margin-bottom: 16px;
+}
+
+.time-slot-label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #666;
+  font-size: 0.875rem; /* text-sm */
+}
+
+.time-slot-grid {
+  display: grid;
+  grid-template-columns: repeat(48, 1fr); /* 48个30分钟刻度 */
+  gap: 1px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+  overflow-x: auto;
+}
+
+.time-slot {
+  height: 40px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: opacity 0.2s, box-shadow 0.2s;
+  border: 1px solid transparent;
+}
+
+.time-slot:hover {
+  opacity: 0.8;
+}
+
+.time-slot.selected {
+  box-shadow: 0 0 0 2px #1890ff;
+  border-color: #1890ff;
+  background: rgba(24, 144, 255, 0.1) !important;
+}
+
+.time-slot.dragging {
+  background: rgba(24, 144, 255, 0.3) !important;
+  border-color: #1890ff;
+}
+
+
+/* 移除自适应隐藏逻辑，确保任何情况下图表均为 48 刻度且不换行 */
+
+
+/* 时间轴标签样式 */
+.time-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 0.75rem; /* text-xs */
+  color: #666;
+}
+
+.time-axis-label {
+  text-align: center;
+  flex: 1;
+}
+
+/* 拖拽提示样式 */
+.drag-hint {
+  text-align: center;
+  color: #666;
+  font-size: 0.875rem; /* text-sm */
+  margin-bottom: 16px;
+  padding: 8px;
+  background: #f9f9f9;
+  border-radius: 4px;
+  border: 1px solid #e5e5e5;
+}
+
+/* 保存状态样式 */
+.time-slot-selector.saving .time-slot {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.time-slot-selector.saving .drag-hint {
+  background: #fff3cd;
+  border-color: #ffeaa7;
+  color: #856404;
+}
+
+/* 空状态样式 */
+.time-slot-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  background: #f9f9f9;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.empty-state-content {
+  text-align: center;
+  color: #666;
+}
+
+.empty-icon {
+  font-size: 3rem; /* text-5xl */
+  margin-bottom: 16px;
+}
+
+.empty-state-content h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 600;
+  color: #333;
+}
+
+.empty-state-content p {
+  margin: 0;
+  font-size: 0.875rem; /* text-sm */
+}
+
+/* 空状态提示样式 - 在有时间槽时使用 */
+.empty-state-hint {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f9f9f9;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+}
+
+.empty-state-hint .empty-icon {
+  font-size: 2rem; /* text-3xl */
+  margin-bottom: 12px;
+}
+
+.empty-state-hint h3 {
+  margin: 0 0 8px 0;
+  font-size: 1rem; /* text-base */
+  font-weight: 600;
+  color: #333;
+}
+
+.empty-state-hint p {
+  margin: 0;
+  font-size: 0.875rem; /* text-sm */
+  color: #666;
+}
+
+/* 打印样式优化 */
+@media print {
+  .time-slot-grid {
+    /* 强制打印时保持48个格子 */
+    grid-template-columns: repeat(48, 1fr) !important;
+    /* 强制打印背景色 */
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 强制显示所有时间槽，覆盖响应式隐藏规则 */
+  .time-slot,
+  .time-slot:nth-child(2n),
+  .time-slot:not(:nth-child(4n)) {
+    display: block !important;
+    /* 强制打印背景色 */
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    /* 打印时添加边框以增加辨识度 */
+    border: 0.5px solid #ccc !important;
+  }
+
+  /* 隐藏占位符和其他非必要元素 */
+  .drag-hint,
+  .empty-state-hint {
+    display: none !important;
+  }
+}

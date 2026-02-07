@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+:root {
+  font-size: 16px;
+}
+
+/* 报告模式高对比度增强 (针对 #chart 和 #pdf) */
+.report-mode {
+  background-color: #fff !important;
+  color: #000 !important;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+
+  /* 1. 覆盖所有系统灰色文字为正黑 */
+  .text-gray-400, .text-gray-500, .text-gray-600, .text-gray-700, .text-gray-800, .text-gray-900,
+  .text-slate-400, .text-slate-500, .text-slate-600, .text-slate-700, .text-slate-800, .text-slate-900,
+  .text-zinc-400, .text-zinc-500, .text-zinc-600, .text-zinc-700, .text-zinc-800, .text-zinc-900,
+  .text-neutral-400, .text-neutral-500, .text-neutral-600, .text-neutral-700, .text-neutral-800, .text-neutral-900,
+  .text-black, .text-xs, .text-sm, .text-base, .text-lg {
+    color: #000 !important;
+  }
+
+  /* 2. 针对特定组件类名、常见标签强制黑化 (正黑 #000) */
+  .time-slot-label, 
+  .time-axis, 
+  .drag-hint, 
+  .empty-state-hint, 
+  .empty-state-content,
+  .empty-state-content p,
+  .empty-state-content h3,
+  .label,
+  label, span, p, h1, h2, h3, h4, h5, h6, dt, dd, li {
+    /* 这里使用 !important 确保覆盖掉组件内部的硬编码颜色（如 #666） */
+    color: #000 !important;
+  }
+
+  /* 2.1 例外：如果未来需要保持特定颜色，可在此添加排除规则 */
+
+  /* 3. Recharts 深度黑化 (暴力全量覆盖模式) */
+  /* 文字部分：强制 SVG 内所有文本变黑，不留死角 */
+  svg text,
+  svg text tspan,
+  .recharts-text,
+  .recharts-label,
+  .recharts-cartesian-axis-tick-value,
+  .recharts-cartesian-axis-tick text,
+  .recharts-legend-item-text,
+  .recharts-label-list text, 
+  .recharts-pie-label-text,
+  .recharts-default-tooltip .recharts-tooltip-item-name,
+  .recharts-default-tooltip .recharts-tooltip-item-value,
+  .recharts-tooltip-item-name,
+  .recharts-tooltip-item-value {
+    fill: #000 !important;
+    color: #000 !important;
+    fill-opacity: 1 !important;
+    opacity: 1 !important;
+    font-weight: 500 !important;
+  }
+  /* 线条部分 */
+  .recharts-cartesian-axis-line,
+  .recharts-cartesian-axis-tick-line,
+  .recharts-reference-line-line {
+    stroke: #000 !important;
+    stroke-width: 1.5px !important;
+    stroke-opacity: 1 !important;
+  }
+  /* 说明：这里不强制 .recharts-curve 变黑，以保持多曲线图的区分度 */
+  /* 网格线 */
+  .recharts-cartesian-grid line {
+    stroke: #d1d5db !important; 
+    stroke-opacity: 1 !important;
+  }
+
+  /* 4. 表格、边框、分割线增强 */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    color: #000 !important;
+  }
+  th, td, .border, [class*='border-'], [class*='divide-'], hr {
+    border-color: #9ca3af !important;
+    opacity: 1 !important;
+  }
+  th, td {
+    color: #000 !important;
+    font-weight: 500;
+  }
+  th {
+    background-color: #f3f4f6 !important;
+  }
+
+  /* 5. 阴影与背景处理 */
+  .shadow, .shadow-md, .shadow-lg, .shadow-sm {
+    box-shadow: none !important;
+    border: 1px solid #9ca3af !important;
+  }
+  .bg-gray-50, .bg-slate-50, .bg-blue-50, .bg-green-50, .bg-orange-50, .bg-red-50 {
+    background-color: #f3f4f6 !important;
+  }
+  .bg-gradient-to-br, .bg-gradient-to-r {
+    background-image: none !important;
+    background-color: #f3f4f6 !important;
+  }
+
+  /* 6. 特殊徽章高亮 (用于解决全局边框灰化问题) */
+  .badge-holiday {
+    border-color: #b91c1c !important; /* Red 700 */
+  }
+  .badge-weekend {
+    border-color: #334155 !important; /* Slate 700 */
+  }
+
+  /* 6. 专属组件修正 */
+  .time-axis {
+    color: #000 !important;
+    font-weight: 600 !important;
+  }
+  
+  /* 7. 图表增强 */
+  .recharts-area-area {
+    fill-opacity: 0.4 !important; /* 加深填充面积 */
+  }
+  .recharts-tooltip-cursor {
+    stroke: #000 !important;
+    stroke-width: 1px !important;
+  }
+
+  /* 8. 隐藏在报告中无用的交互元素 */
+  .no-print {
+    display: none !important;
+  }
+}
