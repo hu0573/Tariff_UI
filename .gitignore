@@ -83,15 +83,12 @@ out/
 
 # Nuxt.js build / generate output
 .nuxt
+# dist folder is ignored, but docs is kept for GitHub Pages
 dist
 
-# Gatsby files
-.cache/
-# Comment in the public line if your project uses Gatsby and you want to ignore the public folder
-# public
-
 # vue-cli build objects
-dist/
+# dist/ commented out to allow docs folder for GitHub Pages
+# dist/
 
 # Serverless directories
 .serverless/
