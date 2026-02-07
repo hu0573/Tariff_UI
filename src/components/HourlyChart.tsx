@@ -105,17 +105,9 @@ export const HourlyChart: React.FC<HourlyChartProps> = ({
   // Calculate angle and interval for X-axis labels based on data point count
   // If too many points, rotate labels and show fewer labels to avoid overlap
   const shouldRotateLabels = chartData.length > 20;
-  const angle = shouldRotateLabels ? -45 : 0;
-  // Calculate interval: show every Nth label based on data count
-  // For 50+ points, show every 5th; for 20-50, show every 3rd; otherwise show all
-  const calculateInterval = () => {
-    const count = chartData.length;
-    if (count >= 50) return 4; // Show every 5th label (0, 5, 10, ...)
-    if (count >= 30) return 2; // Show every 3rd label (0, 3, 6, ...)
-    if (count >= 20) return 1; // Show every 2nd label (0, 2, 4, ...)
-    return 0; // Show all labels
-  };
-  const interval = calculateInterval();
+
+  // Unused angle/interval logic removed
+
 
   return (
     <div className="w-full">
@@ -150,7 +142,7 @@ export const HourlyChart: React.FC<HourlyChartProps> = ({
             }}
           />
           <Tooltip
-            formatter={(value: number) => [value.toFixed(5), selectedChannel]}
+            formatter={(value: any) => [Number(value).toFixed(5), selectedChannel]}
             labelFormatter={(label, payload) => {
               if (payload && payload[0] && payload[0].payload) {
                 return `Time: ${payload[0].payload.fullTimestamp}`;

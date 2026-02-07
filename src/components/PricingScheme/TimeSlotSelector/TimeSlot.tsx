@@ -66,6 +66,9 @@ export const TimeSlot: React.FC<TimeSlotProps> = ({
       // 点击事件：如果有时间段，打开编辑页面
       if (periodId) {
         onClick(periodId, periodName);
+      } else {
+        // If empty slot clicked, trigger empty click
+        onClick(undefined, undefined);
       }
       // 如果没有时间段，不做任何事
     } else {

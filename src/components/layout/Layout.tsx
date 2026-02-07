@@ -140,7 +140,6 @@ export const Layout: React.FC = () => {
       <div className="flex">
         {!isPrintMode && !isChartMode && (
           <SidebarNew
-            activeSection={activeSection}
             isCollapsed={isSidebarCollapsed}
             onToggleCollapse={handleToggleSidebar}
           />

@@ -1,5 +1,4 @@
 // Billing calculation API client
-import apiClient from "./client";
 
 export interface BillingCalculationRequest {
   nmi: string;
@@ -254,7 +253,7 @@ export const billingApi = {
     };
   },
   
-  getEnergyConsumption: async (data: EnergyConsumptionRequest) => {
+  getEnergyConsumption: async (_data: EnergyConsumptionRequest) => {
     await new Promise((resolve) => setTimeout(resolve, 800));
     // Simplified energy consumption mock
     return { 
@@ -269,7 +268,7 @@ export const billingApi = {
     };
   },
   
-  getEnergyExport: async (data: EnergyConsumptionRequest) => {
+  getEnergyExport: async (_data: EnergyConsumptionRequest) => {
     await new Promise((resolve) => setTimeout(resolve, 800));
     return {
       data: {

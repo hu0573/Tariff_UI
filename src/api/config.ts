@@ -1,6 +1,31 @@
-
 // Mock configuration API functions
 import { mockNMIList, mockSAPNConfig } from "./mockData";
+
+export interface ServerConfig {
+  host?: string;
+  username?: string;
+  port?: number;
+  remote_dir?: string;
+  connection_status?: string;
+  path_accessible?: boolean;
+}
+
+export interface ServerConfigInput extends ServerConfig {
+  password?: string;
+}
+
+export interface MySQLConfig {
+  host?: string;
+  port?: number;
+  username?: string;
+  database?: string;
+  enabled?: boolean;
+}
+
+export interface MySQLConfigInput extends MySQLConfig {
+  password?: string;
+  database_name?: string; // For create database
+}
 
 export const configApi = {
   // SAPN configuration
@@ -8,11 +33,11 @@ export const configApi = {
     await new Promise((resolve) => setTimeout(resolve, 300));
     return { data: mockSAPNConfig };
   },
-  updateSAPNConfig: async (data: { username: string; password: string }) => {
+  updateSAPNConfig: async (_data: { username: string; password: string }) => {
     await new Promise((resolve) => setTimeout(resolve, 500));
     return { data: { success: true, message: "Configuration saved" } };
   },
-  testSAPNConnection: async (data: { username: string; password: string }) => {
+  testSAPNConnection: async (_data: { username: string; password: string }) => {
     await new Promise((resolve) => setTimeout(resolve, 800));
     return { data: { success: true, nmi_count: 5, message: "Connection successful" } };
   },
@@ -26,21 +51,22 @@ export const configApi = {
   },
   refreshNMIList: async () => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    return { data: { success: true, current_count: mockNMIList.length, added: [], removed: [] } };
+    return { data: { success: true, message: "Refresh successful", current_count: mockNMIList.length, added: [], removed: [] } };
   },
   
   // Server configuration
   getServerConfig: async () => {
     await new Promise((resolve) => setTimeout(resolve, 300));
-    return { data: { host: "192.168.1.100", username: "admin", port: 22, remote_dir: "/var/data" } };
+    const config: ServerConfig = { host: "example.server.com", username: "admin", port: 22, remote_dir: "/var/data", connection_status: "connected", path_accessible: true };
+    return { data: config };
   },
-  updateServerConfig: async (data: any) => {
+  updateServerConfig: async (_data: ServerConfigInput) => {
     await new Promise((resolve) => setTimeout(resolve, 500));
     return { data: { success: true } };
   },
-  testServerConnection: async (data: any) => {
+  testServerConnection: async (_data: ServerConfigInput) => {
     await new Promise((resolve) => setTimeout(resolve, 800));
-    return { data: { success: true, message: "Connected to server" } };
+    return { data: { success: true, message: "Connected to server", path_accessible: true } };
   },
   
   // Refresh strategy
@@ -53,19 +79,19 @@ export const configApi = {
       } 
     };
   },
-  updateRefreshStrategy: async (data: any) => {
+  updateRefreshStrategy: async (_data: any) => {
     await new Promise((resolve) => setTimeout(resolve, 500));
     return { data: { success: true } };
   },
-  addMonitoredNMI: async (data: any) => {
+  addMonitoredNMI: async (_data: any) => {
     await new Promise((resolve) => setTimeout(resolve, 300));
     return { data: { success: true } };
   },
-  updateNMIFrequency: async (nmi: string, data: any) => {
+  updateNMIFrequency: async (_nmi: string, _data: any) => {
     await new Promise((resolve) => setTimeout(resolve, 300));
     return { data: { success: true } };
   },
-  removeMonitoredNMI: async (nmi: string) => {
+  removeMonitoredNMI: async (_nmi: string) => {
     await new Promise((resolve) => setTimeout(resolve, 300));
     return { data: { success: true } };
   },
@@ -73,21 +99,39 @@ export const configApi = {
   // MySQL configuration
   getMySQLConfig: async () => {
      await new Promise((resolve) => setTimeout(resolve, 300));
-     return { data: { host: "localhost", port: 3306, username: "dbuser", database: "tariffs", enabled: true } };
+     const config: MySQLConfig = { host: "localhost", port: 3306, username: "dbuser", database: "tariffs", enabled: true };
+     return { data: config };
   },
-  updateMySQLConfig: async (data: any) => {
+  updateMySQLConfig: async (_data: MySQLConfigInput) => {
     await new Promise((resolve) => setTimeout(resolve, 500));
-    return { data: { success: true } };
+    return { 
+      data: { 
+        success: true,
+        initialization_status: {
+          is_initialized: true,
+          steps: {
+             database: { configured: true, tested: true, required: true, completed: true },
+             file_upload: { configured: true, required: false, completed: true, skipped: true },
+             website: { configured: true, tested: true, required: true, completed: true },
+             nmi_list: { exists: true, count: 3, required: true, completed: true }
+          },
+          completed_steps: ["database"],
+          pending_steps: [],
+          current_step: null,
+          can_skip_file_upload: true
+        }
+      } 
+    };
   },
-  testMySQLConnection: async (data: any) => {
+  testMySQLConnection: async (_data: MySQLConfigInput) => {
     await new Promise((resolve) => setTimeout(resolve, 800));
-    return { data: { success: true, message: "Connected to MySQL" } };
+    return { data: { success: true, message: "Connected to MySQL", version: "8.0.33" } };
   },
-  getMySQLDatabases: async (data: any) => {
+  getMySQLDatabases: async (_data: MySQLConfigInput) => {
     await new Promise((resolve) => setTimeout(resolve, 500));
-    return { data: { databases: ["information_schema", "mysql", "tariffs", "test"] } };
+    return { data: { success: true, databases: ["information_schema", "mysql", "tariffs", "test"] } };
   },
-  createMySQLDatabase: async (data: any) => {
+  createMySQLDatabase: async (_data: MySQLConfigInput) => {
     await new Promise((resolve) => setTimeout(resolve, 800));
     return { data: { success: true } };
   },
@@ -95,14 +139,28 @@ export const configApi = {
   // Initialization
   getInitializationStatus: async () => {
     await new Promise((resolve) => setTimeout(resolve, 200));
-    return { data: { is_initialized: true, steps_completed: ["config", "nmi_sync"] } };
+    return { 
+      data: { 
+        is_initialized: true,
+        steps: {
+          database: { configured: true, tested: true, required: true, completed: true },
+          file_upload: { configured: true, required: false, completed: true, skipped: true },
+          website: { configured: true, tested: true, required: true, completed: true },
+          nmi_list: { exists: true, count: 3, required: true, completed: true }
+        },
+        completed_steps: ["database", "website", "nmi_list"],
+        pending_steps: [],
+        current_step: null,
+        can_skip_file_upload: true
+      } 
+    };
   },
   completeInitialization: async () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
-    return { data: { success: true } };
+    return { data: { success: true, message: "Initialization completed successfully", completed_at: new Date().toISOString() } };
   },
   verifyNMIData: async () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
-    return { data: { success: true, details: "All good" } };
+    return { data: { success: true, exists: true, count: 3, message: "Verification successful" } };
   },
 };

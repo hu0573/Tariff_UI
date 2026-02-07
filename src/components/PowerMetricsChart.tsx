@@ -120,16 +120,8 @@ export const PowerMetricsChart: React.FC<PowerMetricsChartProps> = ({
 
   // Calculate angle and interval for X-axis labels based on data point count
   const shouldRotateLabels = chartData.length > 20;
-  const angle = shouldRotateLabels ? -45 : 0;
+  // Unused angle/interval logic removed
 
-  const calculateInterval = () => {
-    const count = chartData.length;
-    if (count >= 50) return 4;
-    if (count >= 30) return 2;
-    if (count >= 20) return 1;
-    return 0;
-  };
-  const interval = calculateInterval();
 
   return (
     <div className="w-full">
@@ -179,8 +171,8 @@ export const PowerMetricsChart: React.FC<PowerMetricsChartProps> = ({
             />
           )}
           <Tooltip
-            formatter={(value: number) => [
-              isPowerFactor ? value.toFixed(3) : value.toFixed(2),
+            formatter={(value: any) => [
+              isPowerFactor ? Number(value).toFixed(3) : Number(value).toFixed(2),
               chartConfig.yAxisLabel,
             ]}
             labelFormatter={(label, payload) => {

@@ -35,7 +35,7 @@ export interface TimeSlotSelectorProps {
   onPeriodAdd: (period: NewPeriod) => Promise<void>;
   onPeriodUpdate: (periodId: number, period: UpdatePeriod) => Promise<void>;
   onPeriodDelete: (periodId: number) => Promise<void>;
-  onPeriodEdit: (periodId: number, periodName: string) => void;
+  onPeriodEdit: (periodId: number, periodName?: string) => void;
   saving?: boolean;
   readOnly?: boolean;
 }

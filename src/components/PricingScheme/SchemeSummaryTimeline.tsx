@@ -376,8 +376,8 @@ export const SchemeSummaryTimeline: React.FC<SchemeSummaryTimelineProps> = ({
       </div>
 
 
-      {/* Dynamic Pricing row */}
-      {scheme.enable_dynamic_pricing &&
+      {/* Spot Price row */}
+      {scheme.enable_spot_market_buy &&
         renderTimelineRow(
           "Dynamic Pricing",
           Array.from({ length: SLOT_COUNT }, () => true),

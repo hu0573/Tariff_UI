@@ -69,7 +69,7 @@ export default function PricingSchemeDetail() {
       idValue = parseInt(id);
     }
 
-    return { pageMode: pageModeValue, schemeId: idValue };
+    return { pageMode: pageModeValue as PageMode, schemeId: idValue };
   }, [id, location.pathname]);
 
   const [scheme, setScheme] = useState<PricingSchemeDetail | null>(null);

@@ -11,7 +11,7 @@ interface BaseParams {
 }
 
 export const timeRangeApi = {
-  getDayRange: async (params: BaseParams & { date?: string; utc_timestamp?: number }) => {
+  getDayRange: async (_params: BaseParams & { date?: string; utc_timestamp?: number }) => {
     await new Promise((resolve) => setTimeout(resolve, 200));
     // Simplified: return 24h range for today if no date provided
     const now = new Date();
@@ -19,7 +19,7 @@ export const timeRangeApi = {
     return { data: { start_utc_timestamp: start, end_utc_timestamp: start + 86400 } as TimeRangeResponse };
   },
 
-  getWeekRange: async (params: BaseParams & { date_str: string; week_start?: "monday" | "sunday" }) => {
+  getWeekRange: async (_params: BaseParams & { date_str: string; week_start?: "monday" | "sunday" }) => {
     await new Promise((resolve) => setTimeout(resolve, 200));
     // Dummy returning current week approx
     const now = Math.floor(Date.now() / 1000);
@@ -57,7 +57,7 @@ export const timeRangeApi = {
     };
   },
 
-  getRelativeTimeRange: async (params: BaseParams & { relative_time: string }) => {
+  getRelativeTimeRange: async (_params: BaseParams & { relative_time: string }) => {
      await new Promise((resolve) => setTimeout(resolve, 200));
      // Return arbitrary range for demo
      const now = Math.floor(Date.now() / 1000);

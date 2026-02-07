@@ -1,6 +1,5 @@
 
 // Mock NMI Data API functions
-import type { ChannelMappingError } from "./channelMapping";
 
 export interface V2Response<T> {
   success: boolean;
@@ -137,38 +136,16 @@ export const nmiDataApi = {
   },
 
   // Get readings for a specific date
-  getReadings: async (
-    nmi: string,
-    startUtcTimestamp: number,
-    endUtcTimestamp: number,
-    sort: "asc" | "desc" = "desc",
-    params?: TimezoneQuery
-  ) => {
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    return {
-      data: {
-        nmi,
-        state: params?.state || "SA",
-        timezone: "Australia/Adelaide",
-        date: "2024-01-01",
-        total_count: 0,
-        time_range: {
-          start_utc_timestamp: startUtcTimestamp,
-          end_utc_timestamp: endUtcTimestamp
-        },
-        readings: []
-      } as ReadingsResponse
-    };
-  },
+  // getReadings removed (replaced by V2 below)
 
   // Get cache status
-  getCacheStatus: async (nmi: string) => {
+  getCacheStatus: async (_nmi: string) => {
     await new Promise((resolve) => setTimeout(resolve, 300));
     return { data: { has_cache: true, is_valid: true } as CacheStatusResponse };
   },
 
   // Download temp data
-  downloadTemp: async (nmi: string) => {
+  downloadTemp: async (_nmi: string) => {
     await new Promise((resolve) => setTimeout(resolve, 300));
     return { data: { success: true, message: "Started" } as DownloadTempResponse };
   },
@@ -178,7 +155,8 @@ export const nmiDataApi = {
     nmi: string,
     startUtcTimestamp: number,
     endUtcTimestamp: number,
-    sort: "asc" | "desc" = "asc",
+    // Unused sort param commented
+    // _sort: "asc" | "desc" = "asc",
     params?: TimezoneQuery
   ) => {
      await new Promise((resolve) => setTimeout(resolve, 600));
@@ -203,7 +181,8 @@ export const nmiDataApi = {
     nmi: string,
     startUtcTimestamp: number,
     endUtcTimestamp: number,
-    sort: "asc" | "desc" = "desc",
+    // Unused sort param commented
+    // _sort: "asc" | "desc" = "desc",
     params?: TimezoneQuery
   ) => {
     await new Promise((resolve) => setTimeout(resolve, 600));
@@ -224,10 +203,10 @@ export const nmiDataApi = {
   },
 
   // Create power metrics download task
-  createPowerMetricsDownload: async (
-    nmi: string,
-    request: DownloadRequest,
-    params?: TimezoneQuery
+  submitDownload: async (
+    _nmi: string,
+    _request: DownloadRequest,
+    _params?: TimezoneQuery
   ) => {
     await new Promise((resolve) => setTimeout(resolve, 400));
     return {
@@ -240,14 +219,14 @@ export const nmiDataApi = {
   },
 
   // Get download status
-  getDownloadStatus: async (downloadId: string) => {
+  getDownloadStatus: async (_downloadId: string) => {
      await new Promise((resolve) => setTimeout(resolve, 300));
      // Simulate completion
      return { data: { status: "completed", download_url: "#" } };
   },
 
   // Get download file
-  getDownloadFile: async (downloadId: string) => {
+  getDownloadFile: async (_downloadId: string) => {
     await new Promise((resolve) => setTimeout(resolve, 300));
     return { data: new Blob(["Mock CSV Data"], { type: 'text/csv' }) };
   },
@@ -255,8 +234,8 @@ export const nmiDataApi = {
   // Check data integrity
   checkIntegrity: async (
     nmi: string,
-    startUtcTimestamp: number,
-    endUtcTimestamp: number
+    _startUtcTimestamp: number,
+    _endUtcTimestamp: number
   ) => {
     await new Promise((resolve) => setTimeout(resolve, 300));
     return {
@@ -269,14 +248,16 @@ export const nmiDataApi = {
   },
 
   // Get readings with metrics optimized (V2 Integrated)
-  getReadingsWithMetricsV2: async (
-    nmi: string,
-    startUtcTimestamp: number,
-    endUtcTimestamp: number,
-    sort: "asc" | "desc" = "asc",
-    params?: TimezoneQuery
+  getReadings: async (
+    _nmi: string,
+    dateRange: { start: string; end: string },
+    // Unused params commented
+    // _sort: "asc" | "desc" = "asc",
+    // _params?: TimezoneQuery
   ) => {
     await new Promise((resolve) => setTimeout(resolve, 600));
+    const startUtcTimestamp = new Date(dateRange.start).getTime() / 1000;
+    const endUtcTimestamp = new Date(dateRange.end).getTime() / 1000;
     return {
       data: {
         success: true,

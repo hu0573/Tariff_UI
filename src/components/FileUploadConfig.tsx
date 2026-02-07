@@ -57,7 +57,8 @@ export function FileUploadConfig() {
     return <Loading />;
   }
 
-  const currentConfig = config || {};
+  // Cast config to explicit type or use type guards
+  const currentConfig: any = config || {};
 
   return (
     <div className="space-y-6">
@@ -217,8 +218,8 @@ export function FileUploadConfig() {
               <div className="flex-1">
                 <p className="text-red-900 font-medium">Connection test failed</p>
                 <p className="text-sm text-red-700 mt-1">
-                  {testMutation.error?.response?.data?.detail || 
-                   testMutation.error?.response?.data?.message || 
+                  {(testMutation.error as any)?.response?.data?.detail || 
+                   (testMutation.error as any)?.response?.data?.message || 
                    testMutation.error?.message || 
                    'Unknown error occurred'}
                 </p>

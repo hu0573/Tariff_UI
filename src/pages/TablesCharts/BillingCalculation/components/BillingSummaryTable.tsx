@@ -64,10 +64,10 @@ export const BillingSummaryTable: React.FC<BillingSummaryTableProps> = ({
       <p className="mb-2">There are two primary reasons why the calculated Fixed Rate Usage might differ from the official retailer bill (e.g., Flow Power):</p>
       <ol className="list-decimal pl-4 space-y-2">
         <li>
-          <strong>Non-Standard Retailer Peak Windows</strong>: Retailers may occasionally apply peak windows that differ from the standard SAPN definition. For example, we observed that for NMI <code>2001000386</code>, the bill for <strong>December 2025</strong> used a Peak window of <strong>09:00 AM - 09:00 PM</strong>, instead of the standard SAPN definition (07:00 AM - 09:00 PM). However, the bill for <strong>November 2025</strong> for the same NMI correctly followed the standard 07:00 AM start time.
+          <strong>Non-Standard Retailer Peak Windows</strong>: Retailers may occasionally apply peak windows that differ from the standard SAPN definition. For example, we observed that for NMI <code>EXAMPLE123456</code>, the bill for <strong>December 2025</strong> used a Peak window of <strong>09:00 AM - 09:00 PM</strong>, instead of the standard SAPN definition (07:00 AM - 09:00 PM). However, the bill for <strong>November 2025</strong> for the same NMI correctly followed the standard 07:00 AM start time.
         </li>
         <li>
-          <strong>Boundary Classification Anomalies</strong>: Retailers may sometimes misclassify individual interval records at time boundaries. For instance, in the December 2025 data for NMI <code>2001000386</code>, a minor residual difference remained even after adjusting for the peak window. The calculation only perfectly matched the bill when the specific record at <strong>2025-12-30 08:30 AM</strong> (officially Off-Peak) was manually treated as Peak.
+          <strong>Boundary Classification Anomalies</strong>: Retailers may sometimes misclassify individual interval records at time boundaries. For instance, in the December 2025 data for NMI <code>EXAMPLE123456</code>, a minor residual difference remained even after adjusting for the peak window. The calculation only perfectly matched the bill when the specific record at <strong>2025-12-30 08:30 AM</strong> (officially Off-Peak) was manually treated as Peak.
         </li>
       </ol>
     </div>

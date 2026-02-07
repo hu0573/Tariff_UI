@@ -10,7 +10,7 @@ export interface ExportTaskResponse {
 
 export const exportApi = {
   // Create CSV task
-  createCsvTask: async (params: {
+  createCsvTask: async (_params: {
     type: string;
     year: number;
     month: number;
@@ -22,7 +22,7 @@ export const exportApi = {
   },
 
   // Create PDF task
-  createPdfTask: async (data: {
+  createPdfTask: async (_data: {
     export_type: "pdf";
     config: any;
     filename_prefix?: string;

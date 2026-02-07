@@ -113,7 +113,6 @@ export const useNMIData = (options: UseNMIDataOptions = {}) => {
           nmi!,
           start_utc_timestamp,
           end_utc_timestamp,
-          sort,
           {
             state: timezoneEntry.state,
             timezone: timezoneEntry.timezone,

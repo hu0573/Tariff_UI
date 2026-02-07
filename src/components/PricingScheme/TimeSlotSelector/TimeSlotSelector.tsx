@@ -114,9 +114,9 @@ export const TimeSlotSelector: React.FC<TimeSlotSelectorProps> = ({
 
   // Handle time slot click
   const handleSlotClick = useCallback(
-    (periodId: number, periodName: string) => {
-      if (readOnly) return;
-      onPeriodEdit(periodId, periodName);
+    (periodId?: number, periodName?: string) => {
+      if (readOnly || !periodId) return;
+      onPeriodEdit(periodId, periodName || '');
     },
     [onPeriodEdit, readOnly]
   );

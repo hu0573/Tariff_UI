@@ -122,7 +122,8 @@ export function MySQLUploadConfig({ onSuccess }: MySQLUploadConfigProps) {
     return <Loading />;
   }
 
-  const currentConfig = config || {};
+  // Cast config to explicit type or use type guards
+  const currentConfig: any = config || {};
 
   return (
     <div className="space-y-6">

@@ -64,7 +64,7 @@ export const BillingChartSection: React.FC<BillingChartSectionProps & { isChartM
                 width={80} // Give enough room for currency
             />
             <Tooltip
-              formatter={(value: number, name: string) => [`$${value.toFixed(2)}`, name]}
+              formatter={(value: any, name: any) => [`$${Number(value).toFixed(2)}`, name]}
               labelStyle={{ color: '#111827', fontWeight: 600 }}
               contentStyle={{ borderRadius: '0.375rem', border: '1px solid #e5e7eb', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' }}
             />

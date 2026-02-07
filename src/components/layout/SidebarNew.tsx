@@ -3,29 +3,16 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 
-interface SidebarItem {
-  path: string;
-  label: string;
-  icon?: React.ReactNode;
-}
-
-interface SidebarSection {
-  id: string;
-  title: string;
-  items: SidebarItem[];
-}
 
 // Simplified layout for demo
-
-
 interface SidebarNewProps {
-  activeSection: string;
+  // activeSection: string; // Unused
   isCollapsed: boolean;
   onToggleCollapse: () => void;
 }
 
 export const SidebarNew: React.FC<SidebarNewProps> = ({
-  activeSection,
+  // activeSection,
   isCollapsed,
   onToggleCollapse,
 }) => {

@@ -2,28 +2,14 @@
 import React from "react";
 import SolEnergyLogo from "@/assets/SolEnergy_logo.svg";
 
-interface TopNavItem {
-  id: string;
-  label: string;
-  path?: string; // Optional, for direct navigation
-}
-
-const topNavItems: TopNavItem[] = [
-  { id: "data-acquisition", label: "Data Acquisition" },
-  { id: "data-configuration", label: "Data Configuration" },
-  { id: "tables-charts", label: "Tables & Charts" },
-  { id: "report-generation", label: "Report Generation" },
-  { id: "settings", label: "Settings" },
-];
-
 interface TopNavbarProps {
-  activeSection: string;
-  onSectionChange: (sectionId: string) => void;
+  activeSection?: string;
+  onSectionChange?: (sectionId: string) => void;
 }
 
 export const TopNavbar: React.FC<TopNavbarProps> = ({
-  activeSection,
-  onSectionChange,
+  // activeSection,
+  // onSectionChange,
 }) => {
   return (
     <nav className="bg-white shadow-sm border-b border-gray-200">

@@ -29,9 +29,9 @@ export const VariableQuickTool: React.FC<VariableQuickToolProps> = ({ initialNmi
 
   // Default NMI selection from list if none provided
   useEffect(() => {
-    if (!selectedNmi && nmiListData?.nmis?.length > 0) {
+    if (!selectedNmi && (nmiListData?.nmis?.length ?? 0) > 0) {
       // Prefer monitored NMIs
-      const monitoredNMIs = nmiListData.nmis.filter((item: any) => {
+      const monitoredNMIs = (nmiListData?.nmis || []).filter((item: any) => {
         if (!refreshStrategy?.monitored_nmis) return true;
         const set = new Set(refreshStrategy.monitored_nmis.map((m: any) => 
           typeof m === 'string' ? m : m.nmi || String(m)
@@ -39,8 +39,10 @@ export const VariableQuickTool: React.FC<VariableQuickToolProps> = ({ initialNmi
         return set.has(item.nmi);
       });
       
-      const defaultNmi = monitoredNMIs.length > 0 ? monitoredNMIs[0].nmi : nmiListData.nmis[0].nmi;
-      setSelectedNmi(defaultNmi);
+      const defaultNmi = monitoredNMIs.length > 0 ? monitoredNMIs[0].nmi : (nmiListData?.nmis?.[0]?.nmi);
+      if (defaultNmi) {
+          setSelectedNmi(defaultNmi);
+      }
     }
   }, [nmiListData, refreshStrategy, selectedNmi]);
 

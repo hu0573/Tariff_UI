@@ -14,7 +14,7 @@ interface TimeSlotRowProps {
   ) => void;
   onSlotMouseEnter: (slotIndex: number) => void;
   onSlotMouseUp: (slotIndex: number) => void;
-  onSlotClick: (periodId: number, periodName: string) => void;
+  onSlotClick: (periodId?: number, periodName?: string) => void;
   rowType: "weekday" | "weekend" | "general";
 }
 

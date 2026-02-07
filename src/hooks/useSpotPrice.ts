@@ -5,9 +5,6 @@ import type {
   DownloadConfig,
   AggregateDataParams, 
   StatisticsParams, 
-  AggregateDataResponse, 
-  StatisticsResponse,
-  TimezoneInfo,
   DateRangeResponse
 } from '@/api/spotPrice';
 
@@ -24,7 +21,7 @@ export const useUpdateDownloadConfig = () => {
   
   return useMutation({
     mutationFn: (config: DownloadConfig) => spotPriceApi.updateDownloadConfig(config),
-    onSuccess: async (response) => {
+    onSuccess: async () => {
       // Refresh config after update
       await queryClient.invalidateQueries({ queryKey: ['spot-price-download-config'] });
       
